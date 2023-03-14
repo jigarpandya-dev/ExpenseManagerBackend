@@ -2,6 +2,7 @@ const express = require("express");
 const Expense = require("../model/expense");
 const router = express.Router();
 const { validateToken } = require("./authroutes");
+const moment = require("moment");
 
 module.exports = router;
 
@@ -53,8 +54,22 @@ router.delete("/deleteExpense", async (req, res) => {
 
 //Get All Expense
 router.get("/getAllExpenses", validateToken, async (req, res) => {
+  const firstdate = moment().startOf("month").format("YYYY-MM-DD");
+  const lastdate = moment().endOf("month").format("YYYY-MM-DD");
+  console.log(lastdate);
+
   try {
-    const data = await Expense.find({ user: req.query.user });
+    const data = await Expense.find({
+      $and: [
+        { user: req.query.user },
+        {
+          date: {
+            $gte: firstdate,
+            $lte: lastdate,
+          },
+        },
+      ],
+    });
     res.json(data);
   } catch (error) {
     res.status(400).json({ message: error.message });

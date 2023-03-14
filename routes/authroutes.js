@@ -44,13 +44,13 @@ router.post("/login", async (req, res) => {
 //REFRESH TOKEN API
 router.post("/refreshToken", (req, res) => {
   if (!refreshTokens.includes(req.body.token))
-    res.status(403).send("Refresh Token Invalid");
+    res.status(402).send("Refresh Token Invalid");
 
   jwt.verify(req.body.token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
     if (err) {
       //remove the old refreshToken from the refreshTokens list
       refreshTokens = refreshTokens.filter((c) => c != req.body.token);
-      res.status(403).send("Refresh Token invalid");
+      res.status(402).send("Refresh Token invalid");
     } else {
       //remove the old refreshToken from the refreshTokens list
       refreshTokens = refreshTokens.filter((c) => c != req.body.token);
@@ -94,7 +94,7 @@ function validateToken(req, res, next) {
   const token = authHeader.split(" ")[1];
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) {
-      res.status(401).send("Token invalid");
+      res.status(401).json({ message: "Token invalid" });
     } else {
       req.user = user;
       next(); //proceed to the next action in the calling function

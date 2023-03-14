@@ -21,6 +21,7 @@
     "firebase-functions": "^3.18.0",
     "firebase-tools": "^11.22.0",
     "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
     "mongoose": "^6.9.0",
     "nodemon": "^2.0.20"
   },

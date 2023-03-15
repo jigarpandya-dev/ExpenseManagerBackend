@@ -1,4 +1,4 @@
-//const functions = require("firebase-functions");
+const functions = require("firebase-functions");
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -30,4 +30,4 @@ const { authRoutes } = require("./routes/authroutes");
 
 app.use("/api", expenseRoutes);
 app.use("/api/user", authRoutes);
-//exports.app = functions.https.onRequest(app);
+exports.app = functions.https.onRequest(app);

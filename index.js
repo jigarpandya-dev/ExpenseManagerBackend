@@ -27,7 +27,10 @@ database.once("connected", () => {
 
 const expenseRoutes = require("./routes/expenseroutes");
 const { authRoutes } = require("./routes/authroutes");
+const categoryRoutes = require("./routes/categoryroutes");
 
 app.use("/api", expenseRoutes);
+app.use("/api", categoryRoutes);
 app.use("/api/user", authRoutes);
-exports.app = functions.https.onRequest(app);
+
+//exports.app = functions.https.onRequest(app);
